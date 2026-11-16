@@ -12,6 +12,7 @@
   --paper:#F9F9F6; --ink:#000; --mute:#77776f; --bar:76px; --sw:48px;
   --body:"Pretendard Variable",Pretendard,system-ui,-apple-system,"Segoe UI",sans-serif;
   --display:var(--body); --hand:var(--body);
+  /* Perforations de la pellicule en gris clair */
   --holes:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect x='14' y='14' width='20' height='20' rx='5' fill='%23F9F9F6'/></svg>");
 }
 *{box-sizing:border-box;margin:0}
@@ -24,7 +25,7 @@ a{color:inherit}
 /* ---------- Barre du haut ---------- */
 .top{position:fixed;inset:0 0 auto 0;z-index:2000;height:calc(var(--bar) + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;
   padding:env(safe-area-inset-top,0px) clamp(16px,4vw,48px) 0;background:var(--paper);border-bottom:1px solid rgba(0,0,0,.08)}
-.logo{font-family:var(--display);font-weight:700;font-size:22px;text-decoration:none;letter-spacing:-.02em}
+.logo-img{height:28px;width:auto;display:block}
 .pill{display:flex;gap:4px;padding:5px;border-radius:99px;border:1.5px solid rgba(0,0,0,.15)}
 .pill a{padding:8px 18px;border-radius:99px;text-decoration:none;font-size:15px;font-weight:500;transition:background .2s,color .2s;white-space:nowrap}
 .pill a:hover,.pill a.on{background:var(--ink);color:var(--paper)}
@@ -35,7 +36,6 @@ a{color:inherit}
 .pill .about-mobile{display:none}
 
 @media(max-width:760px){
-  .logo{font-size:19px}
   .pill{display:flex;gap:2px;padding:4px}
   .pill a{padding:6px 12px;font-size:13.5px}
   .pill .ko{display:none}
@@ -43,36 +43,39 @@ a{color:inherit}
 }
 
 /* ---------- Page = pellicule ---------- */
-.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:clamp(24px,5vw,96px);padding:0 0 0 clamp(16px,4vw,48px)}
+.cols{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,520px);gap:clamp(24px,4vw,64px);padding:0 0 0 clamp(16px,4vw,48px)}
 .side{position:sticky;top:var(--bar);align-self:start;padding-top:36px}
 .js .side{opacity:0}.loaded .side{opacity:1;transition:opacity .7s .9s}
 
-.side h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3vw,48px);line-height:.98;letter-spacing:-.035em}
-.side h3{margin-top:8px;font-size:16px;font-weight:600;color:var(--mute)}
+.side h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,2.8vw,44px);line-height:.98;letter-spacing:-.035em}
+.side h3{margin-top:8px;font-size:15px;font-weight:600;color:var(--mute)}
 .hand{font-size:15px;font-weight:500;line-height:1.35;color:var(--mute);margin:16px 0 14px}
 .hand .ko{display:block;font-size:14px}
 .ghost{background:none;border:1.5px solid rgba(0,0,0,.4);color:var(--ink);padding:9px 18px;border-radius:99px;font:600 13.5px var(--body);cursor:pointer;text-align:left;transition:background .2s,color .2s}
 .ghost:hover{background:var(--ink);color:var(--paper)}
 .ghost .ko{margin-left:6px;opacity:.65;font-size:.9em}
 
-/* ---------- Post-its (Colonne de gauche) ---------- */
+/* ---------- Post-its côte à côte (PC) / empilés (Mobile) ---------- */
 .notes-stack{
   display:flex;
-  flex-direction:column;
-  gap:24px;
-  margin-top:32px;
+  flex-direction:row;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-top:28px;
   padding-bottom:32px;
-  max-width:44ch;
+  max-width:720px;
   scroll-margin-top:calc(var(--bar) + 20px);
 }
 .post-it{
   background:#ffffff;
-  padding:22px;
+  padding:20px;
   border-radius:4px;
   box-shadow:0 10px 28px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
   position:relative;
   border-left:3px solid var(--ink);
   z-index:2;
+  flex:1;
+  min-width:280px;
 }
 .paperclip{
   position:absolute;
@@ -88,8 +91,8 @@ a{color:inherit}
   z-index:3;
 }
 .id-photo{
-  width:52px;
-  height:52px;
+  width:48px;
+  height:48px;
   border-radius:3px;
   overflow:hidden;
   margin-bottom:12px;
@@ -99,29 +102,30 @@ a{color:inherit}
   background:#efefea;
 }
 .id-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.post-it .greeting{font-size:14px;line-height:1.48;color:var(--ink)}
-.post-it .ko{margin-top:6px;font-size:12.5px;line-height:1.42;color:var(--mute)}
+.post-it .greeting{font-size:13.5px;line-height:1.46;color:var(--ink)}
+.post-it .ko{margin-top:6px;font-size:12px;line-height:1.4;color:var(--mute)}
 .post-it .clients-line{
   margin-top:12px;
   padding-top:10px;
   border-top:1px dashed rgba(0,0,0,.12);
-  font-size:12.5px;
+  font-size:12px;
   color:var(--mute);
 }
 .post-it .clients-line span{font-weight:600;color:var(--ink);display:block;margin-bottom:2px}
 
-/* Post-it 2 : Mulbap avec dessin derrière */
-.post-it-wrapper{position:relative}
+/* Post-it 2 : Mulbap avec feuille arrière décalée pour voir le dessin */
+.post-it-wrapper{position:relative;flex:1;min-width:280px}
 .back-sheet{
   position:absolute;
-  inset:-8px -6px -6px -8px;
-  background-color:#f3f3ee;
+  /* Décalage prononcé sur la droite et un peu plus large pour dévoiler l'illustration */
+  inset:-8px -28px -6px 12px;
+  background-color:#eaeae5;
   background-image:var(--drawing);
   background-size:cover;
   background-position:center;
   border-radius:6px;
   border:1px solid rgba(0,0,0,.1);
-  transform:rotate(-3deg) translate(-4px,4px);
+  transform:rotate(2deg);
   z-index:1;
   box-shadow:0 6px 16px rgba(0,0,0,.08);
   overflow:hidden;
@@ -130,9 +134,9 @@ a{color:inherit}
   content:"";
   position:absolute;
   inset:0;
-  background:rgba(249,249,246,.78);
+  background:rgba(249,249,246,.72); /* Légèrement plus transparent pour mieux voir le dessin décalé */
 }
-.mulbap-note{transform:rotate(.7deg)}
+.mulbap-note{transform:rotate(-0.5deg)}
 .insta-btn{
   display:inline-block;
   margin-top:14px;
@@ -147,8 +151,8 @@ a{color:inherit}
 }
 .insta-btn:hover{transform:translateY(-2px);opacity:.88}
 
-/* ---------- Pellicule droite ---------- */
-.strip{position:relative;background:#000;padding:calc(var(--bar) + 24px) var(--sw) 56px;display:grid;gap:28px}
+/* ---------- Pellicule droite (Gris très clair et épuré) ---------- */
+.strip{position:relative;background:#eaeae6;padding:calc(var(--bar) + 24px) var(--sw) 56px;display:grid;gap:28px}
 .js .strip{transform:translateY(-100vh)}
 .loaded .strip{transform:none;transition:transform 1.15s cubic-bezier(.22,.9,.25,1)}
 .strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:var(--sw);background:var(--holes) repeat-y 0 0/var(--sw) var(--sw)}
@@ -188,7 +192,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
   :root{--sw:36px}
   .cols{grid-template-columns:minmax(0,1fr);padding:0}
   .side{position:static;padding:calc(var(--bar) + 36px) 20px 32px}
-  .notes-stack{max-width:100%}
+  .notes-stack{flex-direction:column;max-width:100%}
   .strip{padding-top:24px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .strip{transform:none}.loaded .strip,.scrap{transition:none}}
@@ -197,7 +201,10 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
 <body>
 
 <header class="top">
-  <a class="logo" href="#top">Normade Studio</a>
+  <a href="#top">
+    <!-- Remplace logo.png par le nom de ton fichier image de logo -->
+    <img src="logo.png" alt="Normade Studio" class="logo-img">
+  </a>
   <nav class="pill" aria-label="Main">
     <a class="on" href="#work">Work<span class="ko" lang="ko">작업</span></a>
     <a class="about-mobile" href="#about">About<span class="ko" lang="ko">소개</span></a>
@@ -213,7 +220,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
       <p class="hand">Slide each paper aside to see projects<span class="ko" lang="ko">종이를 옆으로 밀어보고 프로젝트 보세요</span></p>
       <button class="ghost" id="reset" type="button">Stick the papers back<span class="ko" lang="ko">종이 다시 붙이기</span></button>
 
-      <!-- Post-its (PC colonne gauche / Mobile section #about) -->
+      <!-- Post-its (Côte à côte sur PC / Section #about sur mobile) -->
       <div class="notes-stack" id="about">
         <!-- POST-IT 1 : Présentation + Photo + Trombone -->
         <div class="post-it">
@@ -228,7 +235,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
           </div>
         </div>
 
-        <!-- POST-IT 2 : Mulbap avec extrait de dessin en fond -->
+        <!-- POST-IT 2 : Mulbap avec feuille arrière décalée -->
         <div class="post-it-wrapper">
           <div class="back-sheet" style="--drawing: url('chemin-vers-ton-dessin.jpg');"></div>
           <div class="post-it mulbap-note">
@@ -243,7 +250,6 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
     </aside>
 
     <section class="strip" id="work" aria-label="Projects">
-      <!-- Remplace --bg par url(...) pour tes visuels, et ajuste titres/descriptions -->
       <article class="proj" style="--bg:linear-gradient(150deg,#ff4d6d,#7b2cbf)">
         <div class="info"><h3>Seoul100K</h3><p class="meta">Rebranding and character design<span class="ko" lang="ko">리브랜딩 및 캐릭터 디자인</span></p><a class="see" href="seoul100k.html">View project<span class="ko" lang="ko">프로젝트 보기</span></a></div>
         <div class="scrap" role="button" tabindex="0" aria-label="Tear the paper to reveal Seoul100K"><div class="sheet"><b>Project 1</b><span class="ko" lang="ko">프로젝트 1</span><span class="h">Swipe to peel<br>벗겨보세요</span></div></div>
@@ -289,10 +295,8 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
 <footer>Normade Studio by Gautier Laurie · Based in Seoul</footer>
 
 <script>
-/* La pellicule descend au chargement */
 requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.add('loaded')));
 
-/* Lien actif dans la barre */
 const links = [...document.querySelectorAll('.pill a')];
 const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + en.target.id));
@@ -302,7 +306,6 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (el) io.observe(el);
 });
 
-/* Papiers déchirables */
 (() => {
   const scraps = [...document.querySelectorAll('.scrap')], THRESHOLD = 90;
   const tear = (s, dx = 0, dy = 600, rot = 0) => {
