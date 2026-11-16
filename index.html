@@ -30,27 +30,124 @@ a{color:inherit}
 .pill a:hover,.pill a.on{background:var(--ink);color:var(--paper)}
 .pill .ko,.cta .ko{font-size:.86em;opacity:.65;margin-left:4px}
 .cta{background:var(--ink);color:var(--paper);padding:12px 22px;border-radius:99px;font-weight:600;font-size:15px;text-decoration:none;white-space:nowrap}
-@media(max-width:760px){.pill{display:none}}
+
+/* Onglet About caché par défaut sur PC */
+.pill .about-mobile{display:none}
+
+@media(max-width:760px){
+  .logo{font-size:19px}
+  .pill{display:flex;gap:2px;padding:4px}
+  .pill a{padding:6px 12px;font-size:13.5px}
+  .pill .ko{display:none}
+  .pill .about-mobile{display:inline-block}
+}
 
 /* ---------- Page = pellicule ---------- */
 .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:clamp(24px,5vw,96px);padding:0 0 0 clamp(16px,4vw,48px)}
-.side{position:sticky;top:var(--bar);align-self:start;padding-top:48px}
+.side{position:sticky;top:var(--bar);align-self:start;padding-top:36px}
 .js .side{opacity:0}.loaded .side{opacity:1;transition:opacity .7s .9s}
 
-.side h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,3.3vw,54px);line-height:.98;letter-spacing:-.035em}
-.side h1 .ko{display:block;margin-top:14px;font-size:.42em;font-weight:700;letter-spacing:-.01em;line-height:1.35;color:var(--mute)}
-.side .sub{margin-top:26px;max-width:34ch;font-size:16px;line-height:1.5;color:var(--mute)}
-.side .sub .ko{display:block;margin-top:6px;font-size:15px}
-.hand{font-size:17px;font-weight:500;line-height:1.3;color:var(--mute);margin:22px 0 18px}
-.hand .ko{display:block}
-.ghost{background:none;border:1.5px solid rgba(0,0,0,.4);color:var(--ink);padding:11px 20px;border-radius:99px;font:600 14px var(--body);cursor:pointer;text-align:left}
+.side h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3vw,48px);line-height:.98;letter-spacing:-.035em}
+.side h3{margin-top:8px;font-size:16px;font-weight:600;color:var(--mute)}
+.hand{font-size:15px;font-weight:500;line-height:1.35;color:var(--mute);margin:16px 0 14px}
+.hand .ko{display:block;font-size:14px}
+.ghost{background:none;border:1.5px solid rgba(0,0,0,.4);color:var(--ink);padding:9px 18px;border-radius:99px;font:600 13.5px var(--body);cursor:pointer;text-align:left;transition:background .2s,color .2s}
 .ghost:hover{background:var(--ink);color:var(--paper)}
 .ghost .ko{margin-left:6px;opacity:.65;font-size:.9em}
 
-.services{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;max-width:44ch}
-.services li{padding:7px 14px;border:1.5px solid rgba(0,0,0,.18);border-radius:99px;font-size:14px;font-weight:600}
-.services .ko{margin-left:6px;font-weight:500;color:var(--mute);font-size:.92em}
+/* ---------- Post-its (Colonne de gauche) ---------- */
+.notes-stack{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  margin-top:32px;
+  padding-bottom:32px;
+  max-width:44ch;
+  scroll-margin-top:calc(var(--bar) + 20px);
+}
+.post-it{
+  background:#ffffff;
+  padding:22px;
+  border-radius:4px;
+  box-shadow:0 10px 28px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  position:relative;
+  border-left:3px solid var(--ink);
+  z-index:2;
+}
+.paperclip{
+  position:absolute;
+  top:-12px;
+  left:22px;
+  width:14px;
+  height:30px;
+  border:3px solid #77776f;
+  border-radius:7px;
+  background:#f9f9f6;
+  box-shadow:0 2px 4px rgba(0,0,0,.15);
+  transform:rotate(-8deg);
+  z-index:3;
+}
+.id-photo{
+  width:52px;
+  height:52px;
+  border-radius:3px;
+  overflow:hidden;
+  margin-bottom:12px;
+  border:2px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  transform:rotate(2deg);
+  background:#efefea;
+}
+.id-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.post-it .greeting{font-size:14px;line-height:1.48;color:var(--ink)}
+.post-it .ko{margin-top:6px;font-size:12.5px;line-height:1.42;color:var(--mute)}
+.post-it .clients-line{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px dashed rgba(0,0,0,.12);
+  font-size:12.5px;
+  color:var(--mute);
+}
+.post-it .clients-line span{font-weight:600;color:var(--ink);display:block;margin-bottom:2px}
 
+/* Post-it 2 : Mulbap avec dessin derrière */
+.post-it-wrapper{position:relative}
+.back-sheet{
+  position:absolute;
+  inset:-8px -6px -6px -8px;
+  background-color:#f3f3ee;
+  background-image:var(--drawing);
+  background-size:cover;
+  background-position:center;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,.1);
+  transform:rotate(-3deg) translate(-4px,4px);
+  z-index:1;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+.back-sheet::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(249,249,246,.78);
+}
+.mulbap-note{transform:rotate(.7deg)}
+.insta-btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:8px 16px;
+  background:var(--ink);
+  color:var(--paper);
+  font-size:12.5px;
+  font-weight:600;
+  text-decoration:none;
+  border-radius:99px;
+  transition:transform .2s,opacity .2s;
+}
+.insta-btn:hover{transform:translateY(-2px);opacity:.88}
+
+/* ---------- Pellicule droite ---------- */
 .strip{position:relative;background:#000;padding:calc(var(--bar) + 24px) var(--sw) 56px;display:grid;gap:28px}
 .js .strip{transform:translateY(-100vh)}
 .loaded .strip{transform:none;transition:transform 1.15s cubic-bezier(.22,.9,.25,1)}
@@ -64,8 +161,6 @@ a{color:inherit}
 .proj .meta .ko{display:block;font-size:14px;opacity:.8}
 .proj .see{display:inline-block;background:var(--paper);color:var(--ink);padding:9px 18px;border-radius:99px;font-size:14px;font-weight:600;text-decoration:none}
 .proj .see .ko{margin-left:6px;opacity:.65;font-size:.92em}
-.proj .tag{position:absolute;top:14px;right:14px;font-size:14px;font-weight:600;color:#fff;text-align:right;line-height:1.25;background:rgba(0,0,0,.38);padding:6px 10px;border-radius:8px}
-.proj .tag .ko{display:block;font-weight:500;opacity:.85}
 
 /* papier à déchirer : bord irrégulier en clip-path */
 .scrap{position:absolute;inset:0;z-index:3;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;
@@ -84,8 +179,8 @@ backdrop-filter:blur(10px);
 
 /* ---------- Contact ---------- */
 .contact{padding:clamp(72px,10vw,140px) clamp(16px,4vw,48px);text-align:center}
-.contact h2{font-family:var(--display);font-size:clamp(40px,8vw,120px);line-height:.95;letter-spacing:-.04em}
-.contact h2 .ko{display:block;margin-top:14px;font-size:.3em;font-weight:700;letter-spacing:0;color:var(--mute)}
+.contact h3{font-family:var(--display);font-size:clamp(32px,6vw,84px);line-height:.95;letter-spacing:-.04em}
+.contact h3 .ko{display:block;margin-top:14px;font-size:.35em;font-weight:700;letter-spacing:0;color:var(--mute)}
 .contact a.mail{display:inline-block;margin-top:36px;font-size:clamp(18px,2.4vw,30px);font-weight:600;text-underline-offset:6px}
 footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text-align:center}
 
@@ -93,7 +188,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
   :root{--sw:36px}
   .cols{grid-template-columns:minmax(0,1fr);padding:0}
   .side{position:static;padding:calc(var(--bar) + 36px) 20px 32px}
-  .side.right{display:none}
+  .notes-stack{max-width:100%}
   .strip{padding-top:24px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .strip{transform:none}.loaded .strip,.scrap{transition:none}}
@@ -105,6 +200,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
   <a class="logo" href="#top">Normade Studio</a>
   <nav class="pill" aria-label="Main">
     <a class="on" href="#work">Work<span class="ko" lang="ko">작업</span></a>
+    <a class="about-mobile" href="#about">About<span class="ko" lang="ko">소개</span></a>
     <a href="#contact">Contact<span class="ko" lang="ko">연락처</span></a>
   </nav>
 </header>
@@ -116,7 +212,34 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
       <h3>‣ 완성되는 콘텐츠</h3>
       <p class="hand">Slide each paper aside to see projects<span class="ko" lang="ko">종이를 옆으로 밀어보고 프로젝트 보세요</span></p>
       <button class="ghost" id="reset" type="button">Stick the papers back<span class="ko" lang="ko">종이 다시 붙이기</span></button>
-      
+
+      <!-- Post-its (PC colonne gauche / Mobile section #about) -->
+      <div class="notes-stack" id="about">
+        <!-- POST-IT 1 : Présentation + Photo + Trombone -->
+        <div class="post-it">
+          <div class="paperclip"></div>
+          <div class="id-photo">
+            <img src="ton-avatar.jpg" alt="Laurie">
+          </div>
+          <p class="greeting">Hello! Nice to meet you, I am Laurie, Visual Content Designer. I help companies and creators to create attractive visuals and improve their branding.</p>
+          <p class="ko" lang="ko">안녕하세요! 시각 콘텐츠 디자이너 로리입니다. 매력적인 비주얼과 브랜딩을 도와드립니다.</p>
+          <div class="clients-line">
+            <span>Clients &amp; Collaborations :</span> The Korean Dream, Korean Ministry of Environment...
+          </div>
+        </div>
+
+        <!-- POST-IT 2 : Mulbap avec extrait de dessin en fond -->
+        <div class="post-it-wrapper">
+          <div class="back-sheet" style="--drawing: url('chemin-vers-ton-dessin.jpg');"></div>
+          <div class="post-it mulbap-note">
+            <p class="greeting">I also launched my online toon and illustration series under the name of <strong>"Mulbap"</strong> telling short stories of a foreign artist living in South Korea.</p>
+            <p class="ko" lang="ko">한국에 사는 외국인 아티스트의 짧은 이야기를 담은 온라인 툰 &amp; 일러스트 시리즈 '물밥(Mulbap)'도 연재하고 있습니다.</p>
+            <a href="https://instagram.com/toncompte" target="_blank" rel="noopener" class="insta-btn">
+              See Mulbap on Instagram ↗
+            </a>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <section class="strip" id="work" aria-label="Projects">
@@ -160,7 +283,7 @@ footer{padding:0 clamp(16px,4vw,48px) 40px;color:var(--mute);font-size:14px;text
   <section class="contact" id="contact">
     <h3>Got a project?</h3>
     <h3><span class="ko" lang="ko">프로젝트가 있으신가요?</span></h3>
-    <a class="mail" href="mailto:ton@email.com">hello@normadestudio.com</a>
+    <a class="mail" href="mailto:hello@normadestudio.com">hello@normadestudio.com</a>
   </section>
 </main>
 <footer>Normade Studio by Gautier Laurie · Based in Seoul</footer>
@@ -174,7 +297,10 @@ const links = [...document.querySelectorAll('.pill a')];
 const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + en.target.id));
 }), { rootMargin: '-45% 0px -45% 0px' });
-['work', 'contact'].forEach(id => io.observe(document.getElementById(id)));
+['work', 'about', 'contact'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) io.observe(el);
+});
 
 /* Papiers déchirables */
 (() => {
